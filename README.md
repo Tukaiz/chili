@@ -8,7 +8,7 @@ these two method calls in order for your version of Savon to work properly:
 
 1.)
 
-def initialize(server = "http://chili.my.dev/CHILI/main.asmx?wsdl")
+def initialize(server = "http://chili.my.dev/CHILI/main.asmx?wsdl") <br/>
   # the line below may need to change if your Savon version initializes differently
   @client = Savon::Client.new(@url=server)
 	self.authenticate
