@@ -9,5 +9,4 @@ module Chili
   require 'objects/chili_doc'
   require 'objects/chili_service'
 
-
 end

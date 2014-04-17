@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version       = '0.1.0'
   s.date          = '2014-04-15'
   s.summary       = "Chili VPD Service"
-  s.description   = "Contains methods to communicate via savon and mapping via nokogiri-happymapper. Also uses Docsplit to split out PDF pages."
+  s.description   = "Contains methods to communicate via savon and mapping via happymapper. Also uses Docsplit to split out PDF pages."
   s.authors       = ["Andrew Humbert"]
   s.email         = 'a.humbert@tukaiz.com'
   s.homepage      = 'http://www.tukaiz.com'
