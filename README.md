@@ -1,6 +1,8 @@
 chili
 =====
 
+This gem uses DocSplit which requires the package PDFTK to be installed.
+
 Has the dependancy for Savon 0.7.8, which works from Rails 2.2 to at least 3.2.8.
 
 If you are using a newer version of Savon, being loaded by your gemfile, then you might need to overload
