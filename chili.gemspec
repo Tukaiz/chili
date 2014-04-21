@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description   = "Contains methods to communicate via savon and mapping via happymapper. Also uses Docsplit to split out PDF pages."
   s.authors       = ["Andrew Humbert"]
   s.email         = 'a.humbert@tukaiz.com'
-  s.homepage      = 'http://www.tukaiz.com'
+  s.homepage      = 'https://github.com/Tukaiz/chili'
 
   s.files         = Dir["{lib}/**/*"]
 
