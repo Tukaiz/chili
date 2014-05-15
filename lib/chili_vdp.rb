@@ -25,6 +25,11 @@ module Chili
       send_msg('resource_get_tree', hash, ChiliService::ResourceTree)
     end
 
+    def get_resource_tree_raw(resource_name='Documents', parent_folder='', sub_dirs=true, files=true)
+      hash = { 'apiKey'=>@session_id, 'resourceName'=>resource_name, 'parentFolder'=>parent_folder, 'includeSubDirectories'=>sub_dirs, 'includeFiles'=>files}
+      send_msg('resource_get_tree', hash)
+    end
+
     def move_document(application, user_id, unique_id, document_id, name)
       copy_or_move_resource('move', 'Documents', document_id, 'orders/#{application}/#{user_id}/#{unique_id}', name, ChiliDoc::DocumentResource)
     end
