@@ -9,14 +9,23 @@ module ChiliDoc
     attribute :type, String
   end
 
+  class FileInfo
+    include HappyMapper
+    tag 'fileInfo'
+
+    attribute :indexed_at, DateTime, :tag => 'fileIndexed'
+  end
+
+
   class DocumentResource
     include HappyMapper
-    tag 'item'
+    # tag 'item'
 
     attribute :name, String
     attribute :doc_id, String, :tag => 'id'
     attribute :icon_url, String, :tag => 'iconURL'
     attribute :is_folder, Boolean, :tag => 'isFolder'
+    has_many :file_info, ChiliDoc::FileInfo
   end
 
 

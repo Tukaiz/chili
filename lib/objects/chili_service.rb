@@ -15,7 +15,7 @@ module ChiliService
     attribute :name, String
     attribute :doc_id, String, :tag => 'id'
     attribute :is_folder, Boolean, :tag => 'isFolder'
-    has_many  :documents, ChiliDoc::DocumentResource
+    has_many :documents, ChiliDoc::DocumentResource, :tag => 'item', :xpath => '//item[@id]'
   end
 
   class UrlInfo
@@ -48,7 +48,6 @@ module ChiliService
     #has_one :preview, String, :tag=>'result',  :xpath => '//@result//result@URL'
     attribute :result, String
   end
-
 
 
 
