@@ -27,8 +27,7 @@ module Chili
 
     def get_tmp_document_hash
       hash = { 'apiKey'=>@session_id, 'resourceName'=>'Documents', 'includeSubDirectories'=>true, 'includeFiles'=>true}
-      docs = []
-      p = Nori.new
+      docs, p = [], Nori.new
       a = p.parse send_msg('resource_get_tree', hash)
       a.first.last['item'].each do |tmp|
         if tmp['@name'] == 'tmp'
