@@ -15,7 +15,7 @@ module ChiliService
     attribute :name, String
     attribute :doc_id, String, :tag => 'id'
     attribute :is_folder, Boolean, :tag => 'isFolder'
-    has_many :documents, ChiliDoc::DocumentResource, :tag => 'item', :xpath => '//item[@id]'
+    has_one :documents, ChiliDoc::DocumentResource, :tag => 'item', :xpath => "item[@id !='' and @isFolder='false']"
   end
 
   class UrlInfo

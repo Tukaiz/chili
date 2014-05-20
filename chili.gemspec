@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "nokogiri", [">= 1.5.0"]
   s.add_dependency "happymapper", ["= 0.4.1"]
+  s.add_dependency "nori", ["= 2.4.0"]
 
   s.add_dependency "savon", ["= 0.7.8"]
 

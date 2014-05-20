@@ -25,9 +25,25 @@ module Chili
       send_msg('resource_get_tree', hash, ChiliService::ResourceTree)
     end
 
-    def get_resource_tree_raw(resource_name='Documents', parent_folder='', sub_dirs=true, files=true)
-      hash = { 'apiKey'=>@session_id, 'resourceName'=>resource_name, 'parentFolder'=>parent_folder, 'includeSubDirectories'=>sub_dirs, 'includeFiles'=>files}
-      send_msg('resource_get_tree', hash)
+    def get_tmp_document_hash
+      hash = { 'apiKey'=>@session_id, 'resourceName'=>'Documents', 'includeSubDirectories'=>true, 'includeFiles'=>true}
+      docs = []
+      p = Nori.new
+      a = p.parse send_msg('resource_get_tree', hash)
+      a.first.last['item'].each do |tmp|
+        if tmp['@name'] == 'tmp'
+          tmp['item'].force_array.each do |app|
+            app['item'].force_array.each do |user|
+              user['item'].force_array.each do |cart|
+                cart['item'].force_array.each do |doc|
+                  docs += [{:id=> doc['@id'], :name=> doc['@name'], :indexed => doc['fileInfo']['@fileIndexed']}] if (doc['@id'].present? rescue false)
+                end
+              end
+            end
+          end
+        end
+      end
+      docs
     end
 
     def move_document(application, user_id, unique_id, document_id, name)
@@ -94,6 +110,11 @@ module Chili
     def upload_data_file(data_source_id, file_name, raw_data)
       hash = { 'apiKey'=>@session_id, 'dataSourceID'=>data_source_id, 'fileName'=>file_name, 'fileOrData'=>Base64.encode64(raw_data) }
       result_passed?(send_msg('data_source_add_sample_file', hash))
+    end
+
+    def delete_resource(object, object_id)
+      hash = { 'apiKey'=>@session_id, 'resourceName'=>object, 'itemID'=>object_id }
+      result_passed?(send_msg('resource_item_delete', hash))
     end
 
 private
