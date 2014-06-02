@@ -45,12 +45,12 @@ module Chili
       docs
     end
 
-    def move_document(application, user_id, unique_id, document_id, name)
-      copy_or_move_resource('move', 'Documents', document_id, 'orders/#{application}/#{user_id}/#{unique_id}', name, ChiliDoc::DocumentResource)
+    def move_document(application, user_id, unique_id, document_id, document_name)
+      copy_or_move_resource('move', 'Documents', document_id, "orders/#{application}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
     end
 
     def copy_document(application, user_id, unique_id, document_id, document_name)
-      copy_or_move_resource('copy', 'Documents', document_id, "tmp/#{application}/#{user_id}/#{unique_id}", "#{document_name}", ChiliDoc::DocumentResource)
+      copy_or_move_resource('copy', 'Documents', document_id, "tmp/#{application}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
     end
 
     def copy_document_and_return_new_url(application, user_id, unique_id, document_id, document_name, workspace_id=nil, view_prefs=nil, constraints_id=nil)
