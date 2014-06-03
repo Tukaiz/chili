@@ -19,7 +19,7 @@ module ChiliDoc
 
   class DocumentResource
     include HappyMapper
-    # tag 'item'
+    tag 'item'
 
     attribute :name, String
     attribute :doc_id, String, :tag => 'id'
