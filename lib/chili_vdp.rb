@@ -15,7 +15,7 @@ module Chili
       self.authenticate
     end
 
-    def authenticate(env_name_or_url='training', user_name='api', password='api')
+    def authenticate(env_name_or_url='training', user_name='api', password='267cWSZi6')
       hash = { 'environmentNameOrURL'=>env_name_or_url, 'userName'=>user_name, 'password'=> password }
       self.session_id = send_msg('generate_api_key', hash, ChiliService::Authentication).key
     end
@@ -32,10 +32,12 @@ module Chili
       a.first.last['item'].each do |tmp|
         if tmp['@name'] == 'tmp'
           tmp['item'].force_array.each do |app|
-            app['item'].force_array.each do |user|
-              user['item'].force_array.each do |cart|
-                cart['item'].force_array.each do |doc|
-                  docs += [{:id=> doc['@id'], :name=> doc['@name'], :indexed => doc['fileInfo']['@fileIndexed']}] if (doc['@id'].present? rescue false)
+            app['item'].force_array.each do |env|
+              env['item'].force_array.each do |user|
+                user['item'].force_array.each do |cart|
+                  cart['item'].force_array.each do |doc|
+                    docs += [{:id=> doc['@id'], :name=> doc['@name'], :indexed => doc['fileInfo']['@fileIndexed']}] if (doc['@id'].present? rescue false)
+                  end
                 end
               end
             end
@@ -45,16 +47,16 @@ module Chili
       docs
     end
 
-    def move_document(application, user_id, unique_id, document_id, document_name)
-      copy_or_move_resource('move', 'Documents', document_id, "orders/#{application}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
+    def move_document(application, env, user_id, unique_id, document_id, document_name)
+      copy_or_move_resource('move', 'Documents', document_id, "orders/#{application}/#{env}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
     end
 
-    def copy_document(application, user_id, unique_id, document_id, document_name)
-      copy_or_move_resource('copy', 'Documents', document_id, "tmp/#{application}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
+    def copy_document(application, env, user_id, unique_id, document_id, document_name)
+      copy_or_move_resource('copy', 'Documents', document_id, "tmp/#{application}/#{env}/#{user_id}/#{unique_id}", document_name, ChiliDoc::DocumentResource)
     end
 
-    def copy_document_and_return_new_url(application, user_id, unique_id, document_id, document_name, workspace_id=nil, view_prefs=nil, constraints_id=nil)
-      new_doc = copy_document(application, user_id, unique_id, document_id, document_name)
+    def copy_document_and_return_new_url(application, env, user_id, unique_id, document_id, document_name, workspace_id=nil, view_prefs=nil, constraints_id=nil)
+      new_doc = copy_document(application, env, user_id, unique_id, document_id, document_name)
       url = get_document_url(new_doc.doc_id, workspace_id, view_prefs, constraints_id)
       { :doc_id=>new_doc.doc_id, :url=>url }
     end
@@ -114,6 +116,11 @@ module Chili
     def delete_resource(object, object_id)
       hash = { 'apiKey'=>@session_id, 'resourceName'=>object, 'itemID'=>object_id }
       result_passed?(send_msg('resource_item_delete', hash))
+    end
+
+    def object_by_path(resource_name, path)
+      hash = { 'apiKey'=>@session_id, 'resourceName'=>resource_name, 'itemPath'=>path }
+      send_msg('resource_item_get_by_path', hash)
     end
 
 private
